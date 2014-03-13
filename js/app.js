@@ -30,7 +30,8 @@ var
     url = require('url'),
 
     // TMP Folder
-    tmpFolder = path.join(os.tmpDir(), 'Popcorn-Time'),
+    //tmpFolder = path.join(os.tmpDir(), 'Popcorn-Time'),
+    tmpFolder = path.join(process.cwd(), 'tmp'),
 
     // i18n module (translations)
     i18n = require("i18n");
@@ -62,17 +63,17 @@ $("#header").html(_.template($('#header-tpl').html(), {buttons: BUTTON_ORDER}));
 if( ! fs.existsSync(tmpFolder) ) { fs.mkdir(tmpFolder); }
 
 var wipeTmpFolder = function() {
-    if( typeof tmpFolder != 'string' ){ return; }
+    /*if( typeof tmpFolder != 'string' ){ return; }
     fs.readdir(tmpFolder, function(err, files){
         for( var i in files ) {
             fs.unlink(tmpFolder+'/'+files[i]);
         }
-    });
+    });*/
 }
 
 // Wipe the tmpFolder when closing the app (this frees up disk space)
 win.on('close', function(){
-    wipeTmpFolder();
+    //wipeTmpFolder();
     win.close(true);
 });
 
