@@ -68,7 +68,7 @@ var playTorrent = window.playTorrent = function (torrent, subs, movieModel, call
         $("body").addClass("sidebar-open").removeClass("loading");
 
         // Stop processes
-        flix.clearCache();
+        //flix.clearCache();
         flix.destroy();
         videoStreamer = null;
 
