@@ -4,8 +4,6 @@
 
 To allow any computer user to watch movies easily streaming from torrents, without any particular knowledge.
 
-![Demo Screenshot](http://getpopcornti.me/images/how-ui.png)
-
 ### Status
 
 Under development (RC1) for Mac OSX - Windows - Linux.
@@ -16,6 +14,7 @@ Under development (RC1) for Mac OSX - Windows - Linux.
 - ~~[RottenTomatoes](http://developer.rottentomatoes.com) for movies metadata.~~
 - ~~[PirateBay](http://thepiratebay.se/browse/207/0/7/0) Recent popular movies list.~~
 - [YIFY](http://yts.re/api) movie torrents API.
+- [YIFY Subtitles](http://www.yifysubtitles.com/) movie subtitles
 - [OpenSubtitles](http://trac.opensubtitles.org/projects/opensubtitles/wiki/XMLRPC) for subtitles
 - [TheMovieDB](http://www.themoviedb.org/) for movies metadata.
 
