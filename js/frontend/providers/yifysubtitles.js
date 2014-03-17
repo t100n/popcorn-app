@@ -26,8 +26,10 @@ var request = require('request'),
 
 App.findSubtitle = function (model, cb, isFallback) {
     var doRequest = function () {
+        console.log("doRequest: "+baseUrl + '/movie-imdb/' + model.imdb);
+        
         var requestOptions = {
-            url: baseUrl + '/movie-imdb/tt' + model.imdb,
+            url: baseUrl + '/movie-imdb/' + model.imdb,
             headers: {
                 'User-Agent': appUserAgent
             }
@@ -42,6 +44,7 @@ App.findSubtitle = function (model, cb, isFallback) {
 
                 $c('ul.other-subs>li').each(function(i, element){
                     var a = $c(this).children('.subtitle-download');
+
                     if(a.attr("href") !== undefined) {
                         var link = a.attr("href");
                         var linkData = (link.substr(link.lastIndexOf('/') + 1)).split('-');
@@ -78,7 +81,7 @@ App.findSubtitle = function (model, cb, isFallback) {
                                 var subDownloadLink = $c('a.download-subtitle').attr('href');
                                 if (!(language in subs)) {
                                     subs[language] = subDownloadLink;
-                                    App.Cache.setItem('subtitle', model, subs);
+                                    //App.Cache.setItem('subtitle', model, subs);
                                     // Callback
                                     cb(subs);
                                 }
@@ -90,11 +93,5 @@ App.findSubtitle = function (model, cb, isFallback) {
         });
     };
 
-    App.Cache.getItem('subtitle', model, function (cachedItem) {
-        if (cachedItem) {
-            cb(cachedItem);
-        } else {
-            doRequest();
-        }
-    });
+    doRequest();
 };

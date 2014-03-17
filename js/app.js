@@ -1,3 +1,7 @@
+function getUserHome() {
+	return process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE;
+}
+
 var
     // Minimum percentage to open video
     MIN_PERCENTAGE_LOADED = 0.5,
@@ -12,7 +16,7 @@ var
     gui = require('nw.gui'),
 
     // Debug flag
-    isDebug = gui.App.argv.indexOf('--debug') > -1,
+    isDebug = true, //gui.App.argv.indexOf('--debug') > -1,
 
     // browser window object
     win = gui.Window.get(),
@@ -31,7 +35,8 @@ var
 
     // TMP Folder
     //tmpFolder = path.join(os.tmpDir(), 'Popcorn-Time'),
-    tmpFolder = path.join(process.cwd(), 'tmp'),
+    //tmpFolder = path.join(process.cwd(), 'tmp'),
+    tmpFolder = path.join(getUserHome(), 'Movies'),
 
     // i18n module (translations)
     i18n = require("i18n");
@@ -45,6 +50,16 @@ var
     if (isWin)   { BUTTON_ORDER = ['min', 'max', 'close']; }
     if (isLinux) { BUTTON_ORDER = ['min', 'max', 'close']; }
     if (isOSX)   { BUTTON_ORDER = ['close', 'min', 'max']; }
+
+var fs = require('fs');
+var util = require('util');
+var log_file = fs.createWriteStream(process.cwd() + '/debug.log', {flags : 'w'});
+var log_stdout = process.stdout;
+
+console.log = function(d) { //
+  log_file.write(util.format(d) + '\n');
+  log_stdout.write(util.format(d) + '\n');
+};
 
 // Global App skeleton for backbone
 var App = {
@@ -146,7 +161,7 @@ if( ! Settings.get('disclaimerAccepted') ) {
 
     $('.popcorn-disclaimer .btn.confirmation.continue').click(function(event){
         event.preventDefault();
-        userTracking.event('App Disclaimer', 'Accepted', navigator.language.toLowerCase() ).send();
+        //userTracking.event('App Disclaimer', 'Accepted', navigator.language.toLowerCase() ).send();
         Settings.set('disclaimerAccepted', 1);
         $('.popcorn-disclaimer').addClass('hidden');
     });
@@ -158,7 +173,7 @@ if( ! Settings.get('disclaimerAccepted') ) {
         if( $('.popcorn-disclaimer').hasClass('quitting') ){ return; }
         $('.popcorn-disclaimer').addClass('quitting');
 
-        userTracking.event('App Disclaimer', 'Quit', navigator.language.toLowerCase() ).send();
+        //userTracking.event('App Disclaimer', 'Quit', navigator.language.toLowerCase() ).send();
         setTimeout(function(){
             gui.App.quit();
         }, 2000);
@@ -174,8 +189,6 @@ process.on('uncaughtException', function(err) {
         console.log(err);
     }
 });
-
-
 
 // TODO: I have no idea what this is
 App.throttle = function(handler, time) {

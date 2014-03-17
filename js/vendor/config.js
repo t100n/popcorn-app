@@ -1,5 +1,5 @@
 var vendorAPIs = {
   themoviedb: {
-    key: 'd9fbb533c92238d19cf877e7a72f8043'
+    key: '5bd8d87f4f01c26d1ca510f5bedc5ae8'
   }
 };

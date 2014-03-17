@@ -31,4 +31,4 @@ var checkForUpdates = function() {
     })
 };
 
-checkForUpdates();
+//checkForUpdates();

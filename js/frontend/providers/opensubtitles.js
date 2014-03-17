@@ -29,6 +29,24 @@ var xmlrpc = require('xmlrpc'),
         'fin': 'Finnish',
         'bul': 'Bulgarian'    },
 
+    supportedLanguages = {
+        'eng': 'english',
+        'fre': 'french',
+        'dut': 'dutch',
+        'pob': 'portuguese',
+        'rum': 'romanian',
+        'spa': 'spanish',
+        'tur': 'turkish',
+        'ita': 'italian',
+        'ger': 'german',
+        'hun': 'hungarian',
+        'rus': 'russian',
+        'ukr': 'ukrainian',
+        'fin': 'finnish',
+        'bul': 'bulgarian',
+        'lat': 'latvian'
+    },
+
     token;
 
 client.methodCall('LogIn', [
@@ -97,12 +115,9 @@ App.findSubtitle = function (model, cb, isFallback) {
 
                 _.each(data.data, function (sub) {
                     if (typeof subs[sub.SubLanguageID] === 'undefined') {
-                        subs[sub.SubLanguageID] = sub.SubDownloadLink;
+                        subs[supportedLanguages[sub.SubLanguageID]] = sub.SubDownloadLink;
                     }
                 });
-
-                // Save to cache
-                App.Cache.setItem('subtitle', model, subs);
 
                 // Callback
                 cb(subs);
@@ -110,11 +125,5 @@ App.findSubtitle = function (model, cb, isFallback) {
         });
     };
 
-    App.Cache.getItem('subtitle', model, function (cachedItem) {
-        if (cachedItem) {
-            cb(cachedItem);
-        } else {
-            doRequest();
-        }
-    });
+    doRequest();
 };

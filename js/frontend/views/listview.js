@@ -20,7 +20,7 @@ App.View.MovieList = Backbone.View.extend({
         this.collection.fetch();
 
         this.listenTo(this.collection, 'sync', this.render);
-        this.listenTo(this.collection, 'rottenloaded', this.render);
+        //this.listenTo(this.collection, 'rottenloaded', this.render);
     },
 
     empty: function () {
@@ -55,7 +55,7 @@ App.View.MovieList = Backbone.View.extend({
                 setTimeout(function () {
                     $movie.addClass('loaded');
                 }, 50);
-            }
+            }//if
 
             // Check for IMDB id and also image loaded (required for view)
             // We can also check if the subtitles loaded with this.get('subtitlesLoaded')

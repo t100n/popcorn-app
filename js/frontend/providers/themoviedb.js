@@ -15,7 +15,11 @@ App.findMovieInfo = function (imdbId, callback) {
 
         last = +new Date();
 
+        console.log("doRequest: "+last);
+
         var findInfo = function (id, language) {
+            console.log("findInfo: "+id+", "+language);
+
             mdb.movieInfo({
                 id: id, language: language || i18n.getLocale()
             }, function (err, data) {
@@ -40,9 +44,6 @@ App.findMovieInfo = function (imdbId, callback) {
 
                     console.log('Fetched info for', imdbId, ':', info);
 
-                    // Save to cache
-                    App.Cache.setItem('tmdb', imdbId, info);
-
                     // Return callback call
                     callback(info);
                 }
@@ -60,11 +61,5 @@ App.findMovieInfo = function (imdbId, callback) {
         });
     };
 
-    App.Cache.getItem('tmdb', imdbId, function (cachedItem) {
-        if (cachedItem) {
-            callback(cachedItem);
-        } else {
-            doRequest();
-        }
-    });
+    doRequest();
 };

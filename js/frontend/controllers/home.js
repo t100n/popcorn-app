@@ -8,7 +8,7 @@ App.Controller.Home = function (page) {
     }
     // Create movie list
     var movieList = new App.View.MovieList({
-        searchTerm: null,
+        keywords: null,
         genre: null,
         page: page
     });
@@ -22,7 +22,7 @@ App.Controller.Home = function (page) {
         App.Page.Home.show();
     }
 
-    userTracking.pageview('/movies/popular'+((page && page > 1) ? '?page='+page : ''), 'Popular Movies').send();
+    //userTracking.pageview('/movies/popular'+((page && page > 1) ? '?page='+page : ''), 'Popular Movies').send();
     
     setTimeout(function(){
         movieList.constructor.busy = false;

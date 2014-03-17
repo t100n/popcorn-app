@@ -22,7 +22,7 @@
         mac_icns: './images/popcorntime.icns', // Path to the Mac icon file
         mac: true, // We want to build it for mac
         win: true, // We want to build it for win
-        linux32: false, // We don't need linux32
+        linux32: true, // We don't need linux32
         linux64: true // We don't need linux64
       },
       src: ['./css/**', './fonts/**', './images/**', './js/**', './language/**', './node_modules/**', '!./node_modules/grunt*/**', './rc/**', './Config.rb', './index.html', './package.json', './README.md' ] // Your node-webkit app './**/*'

@@ -25,7 +25,7 @@ App.Model.Movie = Backbone.Model.extend({
 
     // DEPRECATED
     setRottenInfo: function () {
-        var model = this;
+        /*var model = this;
 
         App.findMovieInfo(model.get('imdb'), function (data) {
             
@@ -43,7 +43,7 @@ App.Model.Movie = Backbone.Model.extend({
             });
 
             model.trigger('rottenloaded');
-        });
+        });*/
     },
 
     // DEPRECATED
@@ -64,7 +64,7 @@ App.Model.Movie = Backbone.Model.extend({
     initialize: function () {
         this.buildBasicView();
         //this.setRottenInfo();
-        //this.setSubtitles();
+        this.setSubtitles();
         this.calculateTorrentHealth();
     },
 
