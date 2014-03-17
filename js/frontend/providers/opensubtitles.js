@@ -71,8 +71,10 @@ App.unzip = function (url, filename) {
     }).pipe(zlib.createGunzip()).pipe(output);
 };
 
-App.findSubtitle = function (model, cb, isFallback) {
+App.findOpenSubtitle = function (model, cb, isFallback) {
     var doRequest = function () {
+        console.log("findOpenSubtitle doRequest: "+isFallback+", "+model.imdb+", "+model.title);
+
         if (!token) {
             return setTimeout(function () {
                 App.findSubtitle(model, cb);
@@ -82,7 +84,7 @@ App.findSubtitle = function (model, cb, isFallback) {
         var queries = [],
             params;
 
-        Object.keys(Languages).forEach(function (lang) {
+        /*Object.keys(Languages).forEach(function (lang) {
             var opts = {
                 sublanguageid: lang
             };
@@ -94,7 +96,17 @@ App.findSubtitle = function (model, cb, isFallback) {
             }
 
             queries.push(opts);
-        });
+        });*/
+            var opts = {
+            };
+
+            if (isFallback) {
+                opts.imdbid = model.imdb;
+            } else {
+                opts.query = model.title + ' YIFY';
+            }
+
+            queries.push(opts);
 
         params = [
             token,
@@ -114,10 +126,15 @@ App.findSubtitle = function (model, cb, isFallback) {
                 var subs = {};
 
                 _.each(data.data, function (sub) {
-                    if (typeof subs[sub.SubLanguageID] === 'undefined') {
+                    //console.log(sub.SubLanguageID);
+                    //console.log(supportedLanguages[sub.SubLanguageID]);
+
+                    if (typeof subs[supportedLanguages[sub.SubLanguageID]] === 'undefined' && typeof supportedLanguages[sub.SubLanguageID] != 'undefined') {
                         subs[supportedLanguages[sub.SubLanguageID]] = sub.SubDownloadLink;
                     }
                 });
+
+                //console.log(subs);
 
                 // Callback
                 cb(subs);

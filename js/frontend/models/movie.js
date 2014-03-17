@@ -50,14 +50,43 @@ App.Model.Movie = Backbone.Model.extend({
     setSubtitles: function () {
         var model = this;
 
-        App.findSubtitle({
+        var subs = {};
+
+        App.findOpenSubtitle({
             imdb: model.get('imdb'),
             title: model.get('title')
         }, function (info) {
+            if(info) {
+              for(var i in info) {
+                  subs[i] = info[i];
+              }//for
+            }//if
+
             model.set('subbtitlesLoaded', true);
-            model.set('subtitles', info);
+            model.set('subtitles', subs);
 
             model.trigger('rottenloaded');
+
+            App.findYifySubtitle({
+                imdb: model.get('imdb'),
+                title: model.get('title')
+            }, function (info2) {
+                if(info2) {
+                  for(var j in info2) {
+                      console.log("yifySubtitle: "+j+", "+info[j]);
+
+                      subs[j] = info2[j];
+                  }//for
+                }//if
+
+                console.log("yifySubtitles: ");
+                console.log(subs);
+
+                model.set('subbtitlesLoaded', true);
+                model.set('subtitles', subs);
+
+                model.trigger('rottenloaded');
+            });
         });
     },
 

@@ -24,10 +24,10 @@ var request = require('request'),
         'latvian'	: 'Latviski',
         'bulgarian' : 'Български'    };
 
-App.findSubtitle = function (model, cb, isFallback) {
+App.findYifySubtitle = function (model, cb, isFallback) {
     var doRequest = function () {
-        console.log("doRequest: "+baseUrl + '/movie-imdb/' + model.imdb);
-        
+        //console.log("findYifySubtitle doRequest: "+baseUrl + '/movie-imdb/' + model.imdb);
+
         var requestOptions = {
             url: baseUrl + '/movie-imdb/' + model.imdb,
             headers: {
